@@ -26,25 +26,25 @@ int main(int argc, char** argv)
 	const int NumSamples = SampleRate * LengthSeconds;
 
 	const int Subchunk2Size = NumSamples * NumChannels * BitsPerSample/8; //40; 4 bytes -- REMEMBER TO SET LATER IF NEEDED
-	const int ChunkSize = 36 + SubChunk2Size; //4; 4 bytes
+	const int ChunkSize = 36 + Subchunk2Size; //4; 4 bytes
 
 	//not part of wav header!
 	int FrequencyHertz = 1000;
 	int SamplesPerHalfWaveCycle = SampleRate/FrequencyHertz;
 
 	//create file:
-	FILE *file;
-	file = fopen("../output.wav", wb);
+	FILE* file;
+	file = fopen("../output.wav", "wb");
 	
 
 	//initialize file
 	fwrite(&ChunkID, sizeof(ChunkID), 1, file);
 	fclose(file);
-	file = fopen("../output.wav", ab);
+	file = fopen("../output.wav", "ab");
 
 
 	//append rest of header
-	fwrite(ChunkSize, sizeof(ChunkSize), 1, file);
+	fwrite(&ChunkSize, sizeof(ChunkSize), 1, file);
 	fwrite(&Format, sizeof(Format), 1, file);
 	fwrite(&Subchunk1ID, sizeof(Subchunk1ID), 1, file);
 	fwrite(&Subchunk1Size, sizeof(Subchunk1Size), 1, file);
@@ -55,7 +55,13 @@ int main(int argc, char** argv)
 	fwrite(&BlockAlign, sizeof(BlockAlign), 1, file);
 	fwrite(&Subchunk2ID, sizeof(Subchunk2ID), 1, file);
 	fwrite(&Subchunk2Size, sizeof(Subchunk2Size), 1, file);
-	fclose(file)
+	
+	//writing the function to the file
+
+
+	//closing file
+	fprintf(file, "%c", EOF);
+	fclose(file);
 
 	return 0;
 }

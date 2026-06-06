@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <math.h>
 #include "wav_header.h"
 using namespace std;
@@ -9,12 +10,13 @@ using namespace std;
 int generate_square();
 int generate_sine();
 
-int main()
+int main(int argc, char** argv)
 {
-	
+
 	//generate_square();
-	
-	generate_sine();
+
+	//generate sine
+	//generate_sine();
 
 	return 0;
 }

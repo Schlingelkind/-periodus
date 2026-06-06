@@ -4,11 +4,13 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include "parameters.h"
 using namespace std;
 
 #define FILENAME "../output.wav"
 
 int WriteHeaderToFile(FILE* file);
+int SetFileParameters();
 
 //offset; size, content, comments -- BEWARE OF ORDER, SEE OFFSET!
 const int ChunkID = /*0x52494646;*/0x46464952; //0; 4 bytes, "RIFF" (ASCII)
@@ -17,7 +19,7 @@ const int Subchunk1ID = /* 0x666d7420 ;*/ 0x20746d66; //12; 4 bytes "fmt " (ASCI
 const int Subchunk1Size = 16; //16; 4 bytes, PCM -> 16
 const short int AudioFormat = 1; //20; 2 bytes, PCM = 1
 const short int NumChannels = 1; //22; 2 bytes - should be user inputable
-const int SampleRate = 48000; //24; 4 bytes - should be user inputable
+int SampleRate = in_SampleRate; //24; 4 bytes - should be user inputable
 const int ByteRate = SampleRate * NumChannels; //28; 4 bytes
 const short int BitsPerSample = 16; //34; 2 bytes, should be user inputable
 const short int BlockAlign = NumChannels * (BitsPerSample/8); //32; 2 bytes

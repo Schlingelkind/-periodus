@@ -5,7 +5,9 @@ int set_parameters(char** argv)
 {
 	FILE* params;
 	params = fopen("./parameters.h", "w");
-	fprintf(params, "in_SampleRate = %d;\n", atoi(argv[1]));
+	fprintf(params, "#define IN_SAMPLERATE %d;\n", atoi(argv[1]));
+	fprintf(params, "#define IN_BITSPERSAMPLE 16\n");
+	fprintf(params, "#define IN_NUMCHANNELS 1\n");
 	fclose(params);
 
 	return 0;

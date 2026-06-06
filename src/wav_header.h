@@ -10,7 +10,6 @@ using namespace std;
 #define FILENAME "../output.wav"
 
 int WriteHeaderToFile(FILE* file);
-int SetFileParameters();
 
 //offset; size, content, comments -- BEWARE OF ORDER, SEE OFFSET!
 const int ChunkID = /*0x52494646;*/0x46464952; //0; 4 bytes, "RIFF" (ASCII)
@@ -18,10 +17,10 @@ const int Format = /*0x57415645;/*/0x45564157; //(8; 4 bytes, "WAVE" (ASCII)
 const int Subchunk1ID = /* 0x666d7420 ;*/ 0x20746d66; //12; 4 bytes "fmt " (ASCII)
 const int Subchunk1Size = 16; //16; 4 bytes, PCM -> 16
 const short int AudioFormat = 1; //20; 2 bytes, PCM = 1
-const short int NumChannels = 1; //22; 2 bytes - should be user inputable
-int SampleRate = in_SampleRate; //24; 4 bytes - should be user inputable
+const short int NumChannels = IN_NUMCHANNELS; //22; 2 bytes - should be user inputable
+int SampleRate = IN_SAMPLERATE; //24; 4 bytes - should be user inputable
 const int ByteRate = SampleRate * NumChannels; //28; 4 bytes
-const short int BitsPerSample = 16; //34; 2 bytes, should be user inputable
+const short int BitsPerSample = IN_BITSPERSAMPLE; //34; 2 bytes, should be user inputable
 const short int BlockAlign = NumChannels * (BitsPerSample/8); //32; 2 bytes
 const int Subchunk2ID = /*0x64617461;*/ 0x61746164; //36; 4 bytes, "data" (ASCII)
 			      
@@ -94,3 +93,8 @@ int WriteHeaderToFile(FILE* file)
 	fwrite(&header, sizeof(WavHeader), 1, file);
 	return 0;
 }
+
+/*int change_parameters()
+{
+	return 0;
+}*/

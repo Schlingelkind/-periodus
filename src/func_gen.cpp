@@ -16,7 +16,7 @@ int main(int argc, char** argv)
 	//generate_square();
 
 	//generate sine
-	//generate_sine();
+	generate_sine();
 
 	return 0;
 }

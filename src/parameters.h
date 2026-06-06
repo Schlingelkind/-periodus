@@ -1,1 +1,3 @@
-in_SampleRate = 1;
+#define IN_SAMPLERATE 48000;
+#define IN_BITSPERSAMPLE 16
+#define IN_NUMCHANNELS 1

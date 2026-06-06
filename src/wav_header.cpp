@@ -15,8 +15,8 @@ int main(int argc, char** argv)
 	const int Subchunk1ID = /* 0x666d7420 ;*/ 0x20746d66; //12; 4 bytes "fmt " (ASCII)
 	const int Subchunk1Size = 16; //16; 4 bytes, PCM -> 16
 	const short int AudioFormat = 1; //20; 2 bytes, PCM = 1
-	const short int NumChannels = 2; //22; 2 bytes - should be user inputable
-	const int SampleRate = 22050; //24; 4 bytes - should be user inputable
+	const short int NumChannels = 1; //22; 2 bytes - should be user inputable
+	const int SampleRate = 48000; //24; 4 bytes - should be user inputable
 	const int ByteRate = SampleRate * NumChannels; //28; 4 bytes
 	const short int BitsPerSample = 16; //34; 2 bytes, should be user inputable
 	const short int BlockAlign = NumChannels * (BitsPerSample/8); //32; 2 bytes
@@ -31,7 +31,9 @@ int main(int argc, char** argv)
 	//not part of wav header!
 	int FrequencyHertz = 1000;
 	int SamplesPerWaveCycle = SampleRate/FrequencyHertz;
-	int SamplesPerHalfWaveCycle = SampleRate/SamplesPerWaveCycle;
+	int SamplesPerHalfWaveCycle = SamplesPerWaveCycle/2;
+	//printf("whole: %d, half: %d", SamplesPerWaveCycle, SamplesPerHalfWaveCycle);
+
 
 	//create file:
 	FILE* file;
@@ -62,8 +64,8 @@ int main(int argc, char** argv)
 	short int sample = 0; //two bytes (See above!)
 	for(int i = 0; i < NumSamples; i++)
 	{
-		sample = (int)(0x7FFF*0.8) * ((i % SamplesPerWaveCycle) + 1 <= SamplesPerHalfWaveCycle) + (int)(0x0) * ((i % SamplesPerWaveCycle) + 1 > SamplesPerHalfWaveCycle);
-		fwrite(&sample,	sizeof(sample), 1, file);
+		sample = (int)(0x7FFF*0.8) * ((i % SamplesPerWaveCycle) + 1 <= SamplesPerHalfWaveCycle) + (int)(0x7FFF*-0.8) * ((i % SamplesPerWaveCycle) + 1 > SamplesPerHalfWaveCycle);
+		fwrite(&sample,	sizeof(sample), 1, file); 
 	}
 
 	//closing file

@@ -18,9 +18,9 @@ const int Subchunk1ID = /* 0x666d7420 ;*/ 0x20746d66; //12; 4 bytes "fmt " (ASCI
 const int Subchunk1Size = 16; //16; 4 bytes, PCM -> 16
 const short int AudioFormat = 1; //20; 2 bytes, PCM = 1
 const short int NumChannels = IN_NUMCHANNELS; //22; 2 bytes - should be user inputable
-int SampleRate = IN_SAMPLERATE; //24; 4 bytes - should be user inputable
-const int ByteRate = SampleRate * NumChannels; //28; 4 bytes
+int SampleRate = 22050; //24; 4 bytes - should be user inputable
 const short int BitsPerSample = IN_BITSPERSAMPLE; //34; 2 bytes, should be user inputable
+const int ByteRate = SampleRate * NumChannels * (BitsPerSample/8); //28; 4 bytes
 const short int BlockAlign = NumChannels * (BitsPerSample/8); //32; 2 bytes
 const int Subchunk2ID = /*0x64617461;*/ 0x61746164; //36; 4 bytes, "data" (ASCII)
 			      
